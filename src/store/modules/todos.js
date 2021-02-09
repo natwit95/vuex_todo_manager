@@ -1,6 +1,7 @@
 // this is where we put our state, getters, actions, mutations
 import axios from "axios";
 
+
 const state = {
 	todos: [],
 };
@@ -33,7 +34,12 @@ const actions = {
         await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`);
 
         commit('removeTodo', id)
-    }
+    },
+
+    // async filterTodos({ commit }, e) {
+    //     //Get selected numner of todos
+    //     const limit = parseInt(e.target.options[e.target.options.selectedIndex].innerText)
+    // }
 };
 
 const mutations = {
