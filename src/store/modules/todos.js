@@ -1,7 +1,6 @@
 // this is where we put our state, getters, actions, mutations
 import axios from "axios";
 
-
 const state = {
 	todos: [],
 };
@@ -28,30 +27,44 @@ const actions = {
 			}
 		);
 		commit("newTodo", response.data);
-    },
-    
-    async deleteTodo({ commit }, id) {
-        await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`);
+	},
 
-        commit('removeTodo', id)
-    },
+	async deleteTodo({ commit }, id) {
+		await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`);
 
-    async filterTodos({ commit }, e) {
-        //Get selected numner of todos
-        const limit = parseInt(e.target.options[e.target.options.selectedIndex].innerText)
+		commit("removeTodo", id);
+	},
 
-        const response = await axios.get(
-					`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`
-        );
-        commit('setTodos', response.data)
+	async filterTodos({ commit }, e) {
+		//Get selected numner of todos
+		const limit = parseInt(
+			e.target.options[e.target.options.selectedIndex].innerText
+		);
 
-    }
+		const response = await axios.get(
+			`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`
+		);
+		commit("setTodos", response.data);
+	},
+	async updateTodo({ commit }, updTodo) {
+		const response = await axios.put(
+			`https://jsonplaceholder.typicode.com/todos/${updTodo.id}`, updTodo
+		);
+		commit("updateTodo", response.data);
+	},
 };
 
 const mutations = {
 	setTodos: (state, todos) => (state.todos = todos),
-    newTodo: (state, todo) => state.todos.unshift(todo),
-    removeTodo: (state, id) => (state.todos = state.todos.filter(todo => todo.id !== id))
+	newTodo: (state, todo) => state.todos.unshift(todo),
+	removeTodo: (state, id) =>
+		(state.todos = state.todos.filter((todo) => todo.id !== id)),
+	updateTodo: (state, updTodo) => {
+		const index = state.todos.findIndex(todo => todo.id === updTodo.id);
+		if (index !== -1) {
+			state.todos.splice(index, 1, updTodo);
+		}
+	},
 };
 
 export default {
