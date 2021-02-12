@@ -7,7 +7,13 @@
       <span> <span class="complete-box"></span> = Complete </span>
     </div>
     <div class="todos">
-      <div @dblclick="onDblClick(todo)" v-bind:class="{'is-complete':todo.completed}" v-for="todo in allTodos" :key="todo.id" class="todo">
+      <div
+        @dblclick="onDblClick(todo)"
+        v-bind:class="{ 'is-complete': todo.completed }"
+        v-for="todo in allTodos"
+        :key="todo.id"
+        class="todo"
+      >
         {{ todo.title }}
         <i @click="deleteTodo(todo.id)" class="fas fa-trash-alt" />
       </div>
@@ -26,10 +32,10 @@ export default {
       const updTodo = {
         id: todo.id,
         title: todo.title,
-        completed: !todo.completed
-      }
-      this.updateTodo(updTodo)
-    }
+        completed: !todo.completed,
+      };
+      this.updateTodo(updTodo);
+    },
   },
   computed: mapGetters(["allTodos"]),
   created() {
