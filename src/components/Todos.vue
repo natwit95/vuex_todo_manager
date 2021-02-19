@@ -1,4 +1,5 @@
-///Add edit vutton on each box to be able to change the title of a todo
+//Next steps
+//Add edit button on each box to be able to change the title of a todo
 //Utulize vuex
 <template>
   <div>
@@ -16,8 +17,7 @@
         :key="todo.id"
         class="todo"
       >
-      
-      <textarea class="todo" v-model="todo.title"></textarea>
+      {{todo.title}}
         <i @click="deleteTodo(todo.id)" class="fas fa-trash-alt" />
       </div>
     </div>
